@@ -4,7 +4,7 @@ export const swaggerOptions = {
         info: {
             title: "Core API",
             version: "1.0.0",
-            description: "Dokumentasi API Backend Project",
+            description: "Scalable Ecommerce Backend with Node.js & MongoDB",
             contact: {
                 name: "Herfando",
                 url: "https://wa.me/6281234567890"
