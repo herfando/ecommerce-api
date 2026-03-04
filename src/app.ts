@@ -2,15 +2,21 @@ import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import dotenv from "dotenv";
+
 import { swaggerOptions } from "./config/swagger";
 import productRoutes from "./routes/productRoutes";
+import authRoutes from "./routes/authRoutes";
 
-
+dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
 // Swagger setup
