@@ -10,7 +10,9 @@ export const swaggerOptions = {
                 url: "https://wa.me/6281234567890"
             }
         },
-        servers: [{ url: "/" }] // pakai relatif, Railway handle domain
+        servers: [
+            { url: "http://54.151.163.46:5000" } // pake IP publik EC2
+        ]
     },
-    apis: ["./src/routes/*.ts"] // pastikan folder routes dan file ts ada di sini
+    apis: ["./src/routes/*.ts"]
 };
