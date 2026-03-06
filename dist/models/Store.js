@@ -1,4 +1,4 @@
-import mongoose from "mongoose.js";
+import mongoose from "mongoose";
 const storeSchema = new mongoose.Schema(
   {
     owner: {

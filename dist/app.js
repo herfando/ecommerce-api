@@ -1,7 +1,7 @@
-import express from "express.js";
-import cors from "cors.js";
-import swaggerUi from "swagger-ui-express.js";
-import swaggerJsDoc from "swagger-jsdoc.js";
+import express from "express";
+import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
 import dotenv from "dotenv";
 import { swaggerOptions } from "./config/swagge.jsr";
 import productRoutes from "./routes/productRoutes.js";
