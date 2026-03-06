@@ -1,10 +1,11 @@
 {
   "name": "07.ecommerce-api",
   "version": "1.0.0",
+  "type": "module",
   "description": "ecommerce-api – RESTful API for React Native E-Commerce\r Description",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "ts-node src/seed/seedDummyJson.ts"
@@ -42,6 +43,7 @@
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }
