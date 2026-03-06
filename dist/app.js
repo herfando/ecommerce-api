@@ -4,7 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import dotenv from "dotenv";
 import { swaggerOptions } from "./config/swagger";
-import productRoutes from "./routes/productRoutes";
+import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes";
 dotenv.config();
 const app = express();
@@ -18,6 +18,6 @@ const specs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 // Test route
 app.get("/", (req, res) => {
-    res.send("Ecommerce API Running...");
+  res.send("Ecommerce API Running...");
 });
 export default app;
