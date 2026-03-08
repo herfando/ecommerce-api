@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import { swaggerOptions } from "./config/swagger.js";
 import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import cookieParser from "cookie-parser"
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
 
 // Routes
 app.use("/api/auth", authRoutes);
