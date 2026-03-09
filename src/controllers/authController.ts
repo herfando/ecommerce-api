@@ -15,44 +15,54 @@ export const register = async (req: Request, res: Response) => {
         const { name, phone, email, password, confirmPassword } = req.body
 
         if (!name || !phone || !email || !password || !confirmPassword) {
-            return res.status(400).json({ message: "All fields are required" })
+            return res.status(400).json({
+                message: "All fields are required"
+            })
         }
 
         if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Passwords do not match" })
+            return res.status(400).json({
+                message: "Passwords do not match"
+            })
         }
 
         const existingUser = await User.findOne({ email })
 
         if (existingUser) {
-            return res.status(400).json({ message: "Email already registered" })
+            return res.status(400).json({
+                message: "Email already registered"
+            })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
         const verificationToken = crypto.randomBytes(32).toString("hex")
 
-        const verificationExpires = new Date(Date.now() + 60 * 60 * 1000) // 1 jam
+        const verificationExpires = new Date(Date.now() + 60 * 60 * 1000)
 
         const newUser = await User.create({
             name,
             phone,
             email,
             password: hashedPassword,
+            emailVerified: false,
             emailVerificationToken: verificationToken,
-            emailVerificationExpires: verificationExpires,
-            emailVerified: false
+            emailVerificationExpires: verificationExpires
         })
 
         const verifyLink = `${process.env.BASE_URL}/api/auth/verify-email?token=${verificationToken}`
 
-        // Kirim email verifikasi pakai Yahoo
+        console.log("SEND VERIFY EMAIL TO:", newUser.email)
+
         await sendEmail(
             newUser.email,
             "Verify your email",
-            `<p>Hi ${newUser.name},</p>
-             <p>Click link to verify your email:</p>
-             <a href="${verifyLink}">Verify Email</a>`
+            `
+            <h2>Fando Shop</h2>
+            <p>Hi ${newUser.name}</p>
+            <p>Please verify your email:</p>
+            <a href="${verifyLink}">${verifyLink}</a>
+            `
         )
 
         res.status(201).json({
@@ -60,14 +70,21 @@ export const register = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error })
+
+        console.error("REGISTER ERROR:", error)
+
+        res.status(500).json({
+            message: "Server error"
+        })
     }
 }
+
 
 // ==========================
 // VERIFY EMAIL
 // ==========================
 export const verifyEmail = async (req: Request, res: Response) => {
+
     try {
 
         const { token } = req.query
@@ -78,7 +95,9 @@ export const verifyEmail = async (req: Request, res: Response) => {
         })
 
         if (!user) {
-            return res.status(400).json({ message: "Token invalid or expired" })
+            return res.status(400).json({
+                message: "Token invalid or expired"
+            })
         }
 
         user.emailVerified = true
@@ -88,18 +107,23 @@ export const verifyEmail = async (req: Request, res: Response) => {
         await user.save()
 
         res.json({
-            message: "Email verified successfully. You can now login."
+            message: "Email verified successfully"
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error })
+
+        res.status(500).json({
+            message: "Server error"
+        })
     }
 }
+
 
 // ==========================
 // LOGIN STEP 1 (SEND OTP)
 // ==========================
 export const login = async (req: Request, res: Response) => {
+
     try {
 
         const { email, password } = req.body
@@ -107,13 +131,17 @@ export const login = async (req: Request, res: Response) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(400).json({ message: "Invalid credentials" })
+            return res.status(400).json({
+                message: "Invalid credentials"
+            })
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (!isMatch) {
-            return res.status(400).json({ message: "Invalid credentials" })
+            return res.status(400).json({
+                message: "Invalid credentials"
+            })
         }
 
         if (!user.emailVerified) {
@@ -122,15 +150,13 @@ export const login = async (req: Request, res: Response) => {
             })
         }
 
-        // generate 4 digit OTP
         const otp = Math.floor(1000 + Math.random() * 9000).toString()
 
         user.loginOTP = otp
-        user.loginOTPExpires = new Date(Date.now() + 5 * 60 * 1000) // 5 menit
+        user.loginOTPExpires = new Date(Date.now() + 5 * 60 * 1000)
 
         await user.save()
 
-        // kirim OTP ke WhatsApp pakai Twilio
         await sendOtp(user.phone, otp)
 
         res.json({
@@ -138,14 +164,19 @@ export const login = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error })
+
+        res.status(500).json({
+            message: "Server error"
+        })
     }
 }
+
 
 // ==========================
 // LOGIN STEP 2 (VERIFY OTP)
 // ==========================
 export const verifyOTP = async (req: Request, res: Response) => {
+
     try {
 
         const { email, otp } = req.body
@@ -153,15 +184,21 @@ export const verifyOTP = async (req: Request, res: Response) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(400).json({ message: "User not found" })
+            return res.status(400).json({
+                message: "User not found"
+            })
         }
 
         if (user.loginOTP !== otp) {
-            return res.status(400).json({ message: "Invalid OTP" })
+            return res.status(400).json({
+                message: "Invalid OTP"
+            })
         }
 
         if (user.loginOTPExpires && user.loginOTPExpires < new Date()) {
-            return res.status(400).json({ message: "OTP expired" })
+            return res.status(400).json({
+                message: "OTP expired"
+            })
         }
 
         user.loginOTP = undefined
@@ -193,31 +230,32 @@ export const verifyOTP = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error })
+
+        res.status(500).json({
+            message: "Server error"
+        })
     }
 }
+
 
 // ==========================
 // LOGOUT
 // ==========================
 export const logout = async (req: Request, res: Response) => {
-    try {
 
-        res.clearCookie("token")
+    res.clearCookie("token")
 
-        res.json({
-            message: "Logout successful"
-        })
-
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error })
-    }
+    res.json({
+        message: "Logout successful"
+    })
 }
+
 
 // ==========================
 // GET CURRENT USER
 // ==========================
 export const getMe = async (req: Request, res: Response) => {
+
     try {
 
         const token = req.cookies.token
@@ -246,6 +284,7 @@ export const getMe = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+
         res.status(401).json({
             message: "Invalid token"
         })
