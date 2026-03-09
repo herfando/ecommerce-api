@@ -1,4 +1,3 @@
-// src/2FAuth/sendOtp.ts
 import twilio from "twilio";
 
 const client = twilio(
@@ -6,10 +5,16 @@ const client = twilio(
     process.env.TWILIO_AUTH_TOKEN
 );
 
-export const sendOtp = async (to: string, otp: string) => {
-    await client.messages.create({
-        from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
-        to: `whatsapp:${to}`,
-        body: `Your OTP code is: ${otp} (expires in 5 minutes)`,
-    });
+export const sendOtp = async (phone: string, otp: string) => {
+    try {
+        await client.messages.create({
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: `whatsapp:${phone}`,
+            body: `Your login OTP is: ${otp}`
+        });
+
+        console.log("OTP sent to WhatsApp:", phone);
+    } catch (error) {
+        console.error("Failed to send OTP:", error);
+    }
 };
