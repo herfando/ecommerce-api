@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import crypto from "crypto"
 import User from "../models/User.js"
+import { sendEmail } from "../2FAuth/sendEmail.js"
+import { sendOtp } from "../2FAuth/sendOtp.js"
 
 // ==========================
 // REGISTER
@@ -30,7 +32,7 @@ export const register = async (req: Request, res: Response) => {
 
         const verificationToken = crypto.randomBytes(32).toString("hex")
 
-        const verificationExpires = new Date(Date.now() + 60 * 60 * 1000)
+        const verificationExpires = new Date(Date.now() + 60 * 60 * 1000) // 1 jam
 
         const newUser = await User.create({
             name,
@@ -38,21 +40,29 @@ export const register = async (req: Request, res: Response) => {
             email,
             password: hashedPassword,
             emailVerificationToken: verificationToken,
-            emailVerificationExpires: verificationExpires
+            emailVerificationExpires: verificationExpires,
+            emailVerified: false
         })
 
         const verifyLink = `${process.env.BASE_URL}/api/auth/verify-email?token=${verificationToken}`
 
+        // Kirim email verifikasi pakai Yahoo
+        await sendEmail(
+            newUser.email,
+            "Verify your email",
+            `<p>Hi ${newUser.name},</p>
+             <p>Click link to verify your email:</p>
+             <a href="${verifyLink}">Verify Email</a>`
+        )
+
         res.status(201).json({
-            message: "User registered successfully. Please verify your email.",
-            verifyLink
+            message: "User registered successfully. Please verify your email."
         })
 
     } catch (error) {
         res.status(500).json({ message: "Server error", error })
     }
 }
-
 
 // ==========================
 // VERIFY EMAIL
@@ -86,7 +96,6 @@ export const verifyEmail = async (req: Request, res: Response) => {
     }
 }
 
-
 // ==========================
 // LOGIN STEP 1 (SEND OTP)
 // ==========================
@@ -117,23 +126,21 @@ export const login = async (req: Request, res: Response) => {
         const otp = Math.floor(1000 + Math.random() * 9000).toString()
 
         user.loginOTP = otp
-        user.loginOTPExpires = new Date(Date.now() + 5 * 60 * 1000)
+        user.loginOTPExpires = new Date(Date.now() + 5 * 60 * 1000) // 5 menit
 
         await user.save()
 
-        // nanti di sini kirim OTP ke WhatsApp
-        // sendWhatsApp(user.phone, otp)
+        // kirim OTP ke WhatsApp pakai Twilio
+        await sendOtp(user.phone, otp)
 
         res.json({
-            message: "OTP sent to WhatsApp",
-            otp // sementara untuk testing
+            message: "OTP sent to WhatsApp"
         })
 
     } catch (error) {
         res.status(500).json({ message: "Server error", error })
     }
 }
-
 
 // ==========================
 // LOGIN STEP 2 (VERIFY OTP)
@@ -190,7 +197,6 @@ export const verifyOTP = async (req: Request, res: Response) => {
     }
 }
 
-
 // ==========================
 // LOGOUT
 // ==========================
@@ -207,6 +213,7 @@ export const logout = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Server error", error })
     }
 }
+
 // ==========================
 // GET CURRENT USER
 // ==========================
