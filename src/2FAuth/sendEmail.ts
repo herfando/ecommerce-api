@@ -2,7 +2,7 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.mail.yahoo.com",
+    host: "smtp.gmail.com",
     port: 465,
     secure: true,               // pakai SSL
     auth: {
