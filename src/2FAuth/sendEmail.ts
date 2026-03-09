@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
-    secure: true,               // pakai SSL
+    secure: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -12,10 +12,20 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
-    await transporter.sendMail({
-        from: `"Fando Shop" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        html,
-    });
+    try {
+
+        const info = await transporter.sendMail({
+            from: `"Fando Shop" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+
+        console.log("EMAIL SENT:", info.messageId);
+
+    } catch (error) {
+
+        console.error("EMAIL ERROR:", error);
+
+    }
 };
