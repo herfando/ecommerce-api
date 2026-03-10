@@ -11,8 +11,54 @@ export const swaggerOptions = {
             }
         },
         servers: [
-            { url: "http://54.151.163.46:5000" } // pake IP publik EC2
-        ]
+            { url: "http://54.151.163.46:5000" }
+        ],
+        components: {
+            schemas: {
+                Product: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string", example: "69a7d4294ecfc7d68639b4fa" },
+                        id: { type: "number", example: 4 },
+                        title: { type: "string", example: "Red Lipstick" },
+                        description: { type: "string", example: "The Red Lipstick is a classic and bold choice..." },
+                        category: { type: "string", example: "beauty" },
+                        price: { type: "number", example: 12.99 },
+                        discountPercentage: { type: "number", example: 12.16 },
+                        rating: { type: "number", example: 4.36 },
+                        stock: { type: "number", example: 91 },
+                        tags: { type: "array", items: { type: "string" }, example: ["makeup", "lip"] },
+                        brand: { type: "string", example: "Chic Cosmetics" },
+                        sku: { type: "string", example: "BEA-CHI-LIP-004" },
+                        weight: { type: "number", example: 1 },
+                        dimensions: { type: "object" },
+                        warrantyInformation: { type: "string", example: "3 year warranty" },
+                        shippingInformation: { type: "string", example: "Ships in 1 week" },
+                        availabilityStatus: { type: "string", example: "In Stock" },
+                        reviews: { type: "array", items: { type: "object" } },
+                        returnPolicy: { type: "string", example: "7 days return policy" },
+                        minimumOrderQuantity: { type: "number", example: 40 },
+                        meta: { type: "object" },
+                        images: {
+                            type: "array",
+                            items: { type: "object", properties: { thumbnail: { type: "string" } } }
+                        },
+                    },
+                },
+                ProductInput: {
+                    type: "object",
+                    required: ["title", "price", "stock", "category"],
+                    properties: {
+                        title: { type: "string", example: "Red Lipstick" },
+                        description: { type: "string", example: "The Red Lipstick is a classic..." },
+                        price: { type: "number", example: 12.99 },
+                        stock: { type: "number", example: 91 },
+                        image: { type: "string", example: "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.jpg" },
+                        category: { type: "string", example: "beauty" },
+                    },
+                },
+            },
+        },
     },
     apis: ["./src/routes/*.ts"]
 };
