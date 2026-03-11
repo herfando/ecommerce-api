@@ -40,6 +40,6 @@ ecommerce-api/
 │ ├─ utils/ # Helper functions
 │ └─ app.js # Express app setup
 │
-├─ .env # Environment variables
+├─ .env #
 ├─ package.json # Project dependencies & scripts
 └─ README.md
