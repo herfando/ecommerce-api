@@ -8,6 +8,7 @@ import { swaggerOptions } from "./config/swagger.js";
 import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser"
+import storeRoutes from "./routes/storeRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(cookieParser())
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api", storeRoutes);
 
 // Swagger setup
 const specs = swaggerJsDoc(swaggerOptions);
