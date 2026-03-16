@@ -5,7 +5,7 @@ ecommerce-api is a RESTful API built with Node.js, Express, and MongoDB to power
 
 This backend is lightweight, scalable, and follows modern best practices for building e-commerce apps.
 
-Features
+Features :
 
 Products CRUD: Create, Read, Update, Delete products
 
