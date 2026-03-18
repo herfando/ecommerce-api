@@ -28,18 +28,3 @@ Database: MongoDB Atlas or local MongoDB
 Authentication: JWT (JSON Web Token)
 
 Testing / Client: Postman, React Native, Web front-end optional
-
-Folder Structure
-ecommerce-api/
-│
-├─ src/
-│ ├─ controllers/ # API logic for products, users, cart, orders
-│ ├─ models/ # Mongoose schemas
-│ ├─ routes/ # Express route definitions
-│ ├─ middleware/ # Authentication, error handling, etc.
-│ ├─ utils/ # Helper functions
-│ └─ app.js # Express app setup
-│
-├─ .env #
-├─ package.json # Project dependencies & scripts
-└─ README.md
