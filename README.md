@@ -212,12 +212,4 @@ MIT License
 
 ---
 
-## 💡 Notes
 
-- Gunakan HTTPS di production
-- Gunakan IAM Role untuk keamanan AWS
-- Jangan commit file `.env`
-
----
-
-🔥 Happy Coding!
