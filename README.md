@@ -199,17 +199,3 @@ pm2 start server.js
 ```
 
 ---
-
-## 🤝 Contributing
-
-Pull request dipersilakan. Untuk perubahan besar, buka issue terlebih dahulu.
-
----
-
-## 📄 License
-
-MIT License
-
----
-
-
