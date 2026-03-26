@@ -185,17 +185,3 @@ docker run -p 5000:5000 ecommerce-api
 ```
 
 ---
-
-## 📈 Deployment Steps (AWS EC2)
-
-1. Launch EC2 Instance
-2. Install Node.js & PM2
-3. Clone repo
-4. Setup environment variables
-5. Run app with PM2:
-
-```bash
-pm2 start server.js
-```
-
----
