@@ -168,12 +168,3 @@ const uploadFile = async (file) => {
 ```
 
 ---
-
-## 🧪 Testing
-
-```bash
-npm test
-```
-
----
-
