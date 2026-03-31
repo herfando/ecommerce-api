@@ -127,10 +127,3 @@ Authorization: Bearer <token>
 
 - `GET /api/users`
 - `GET /api/users/:id`
-
-### Products
-
-- `GET /api/products`
-- `POST /api/products`
-- `PUT /api/products/:id`
-- `DELETE /api/products/:id`
