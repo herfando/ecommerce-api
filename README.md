@@ -122,8 +122,3 @@ Authorization: Bearer <token>
 
 - `POST /api/auth/register`
 - `POST /api/auth/login`
-
-### Users
-
-- `GET /api/users`
-- `GET /api/users/:id`
