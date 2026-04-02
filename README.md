@@ -101,17 +101,3 @@ npm start
 ---
 
 ## 🔐 Authentication
-
-Menggunakan JWT:
-
-- Register
-- Login
-- Protected Routes
-
-Header:
-
-```
-Authorization: Bearer <token>
-```
-
----
