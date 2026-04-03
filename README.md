@@ -89,15 +89,3 @@ npm start
 ```
 
 ---
-
-## ☁️ AWS Architecture
-
-- **EC2** → Hosting backend
-- **RDS** → Database
-- **S3** → Image storage
-- **API Gateway** (optional) → Routing API
-- **Lambda** (optional) → Serverless functions
-
----
-
-## 🔐 Authentication
