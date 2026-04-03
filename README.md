@@ -74,18 +74,4 @@ AWS_S3_BUCKET=your-bucket-name
 
 ---
 
-## ▶️ Running the App
-
-### Development
-
-```bash
-npm run dev
-```
-
-### Production
-
-```bash
-npm start
-```
-
----
+#
