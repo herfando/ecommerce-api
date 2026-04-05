@@ -55,23 +55,3 @@ npm install
 
 ---
 
-## 🔑 Environment Variables
-
-Buat file `.env`:
-
-```
-PORT=5000
-DB_HOST=your-rds-endpoint
-DB_USER=your-db-user
-DB_PASSWORD=your-db-password
-DB_NAME=ecommerce
-JWT_SECRET=your-secret-key
-AWS_ACCESS_KEY_ID=your-access-key
-AWS_SECRET_ACCESS_KEY=your-secret-key
-AWS_REGION=ap-southeast-1
-AWS_S3_BUCKET=your-bucket-name
-```
-
----
-
-#
