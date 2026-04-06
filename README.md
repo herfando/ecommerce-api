@@ -45,13 +45,3 @@ RESTful API untuk sistem e-commerce menggunakan Node.js dan layanan AWS. Diranca
 
 ---
 
-## ⚙️ Installation
-
-```bash
-git clone https://github.com/your-username/ecommerce-api.git
-cd ecommerce-api
-npm install
-```
-
----
-
