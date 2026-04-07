@@ -26,22 +26,3 @@ RESTful API untuk sistem e-commerce menggunakan Node.js dan layanan AWS. Diranca
 
 ---
 
-## 📁 Project Structure
-
-```
-├── src
-│   ├── controllers
-│   ├── services
-│   ├── models
-│   ├── routes
-│   ├── middlewares
-│   ├── utils
-│   └── config
-├── tests
-├── .env
-├── package.json
-└── server.js
-```
-
----
-
