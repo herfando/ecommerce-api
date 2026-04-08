@@ -13,16 +13,3 @@ RESTful API untuk sistem e-commerce menggunakan Node.js dan layanan AWS. Diranca
 - Docker (optional)
 
 ---
-
-## 📦 Features
-
-- 🔐 Authentication & Authorization (JWT)
-- 👤 User Management
-- 🛍️ Product Management
-- 🧺 Cart System
-- 💳 Order & Payment
-- ☁️ File Upload ke AWS S3
-- 📊 Admin Dashboard API
-
----
-
